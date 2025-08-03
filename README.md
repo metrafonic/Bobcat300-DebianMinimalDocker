@@ -1,6 +1,10 @@
 # Bobcat300-DebianMinimalDocker
 A minimal docker-compose config for running a helium lora gateway on a bobcat 300.
 
+## Warning
+Currently having issues with the pf crashing. Do not use in prod yet 
+
+## Details
 Currently only tested on the `G285`
 
 Uses the following docker images:
