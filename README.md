@@ -28,6 +28,12 @@ reboot
 mkdir gw && cd gw
 curl -fsSL https://raw.githubusercontent.com/metrafonic/Bobcat300-DebianMinimalDocker/refs/heads/main/docker-compose.yml-o docker-compose.yml
 ```
+Modify the compose file to match your region. Current config uses `GW_REGION=EU868` and `BAND=eu_863_870`. Make sure to edit them both if this does not match.
+
+The `BAND` can be one of these values: `as_915_921(as_923_3)`, `as_915_928(as_915_1)`, `as_917_920(as_923_4)`, `as_920_923(as_923_2)`, `au_915_928`, `cn_470_510`, `eu_433`, `eu_863_870`, `in_865_867`, `kr_920_923`, `ru_864_870`, and `us_902_928`.
+
+The `REGION` can be one of the following values `US915 | EU868 | EU433 | CN470 | CN779 | AU915 | AS923 | KR920 | IN865`
+
 Start the services
 ```
 docker-compose up -d
