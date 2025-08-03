@@ -1,6 +1,8 @@
 # Bobcat300-DebianMinimalDocker
 A minimal docker-compose config for running a helium lora gateway on a bobcat 300.
 
+Currently only tested on the `G285`
+
 Uses the following docker images:
 - `rakwireless/udp-packet-forwarder:latest` - Stable packet forwarder. I had issues with other images
 - `quay.io/team-helium/miner:gateway-latest` - Official gateway image
