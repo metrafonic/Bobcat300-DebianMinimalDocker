@@ -3,6 +3,7 @@ A minimal docker-compose config for running a helium lora gateway on a bobcat 30
 
 ## Warning
 Currently having issues with the pf crashing. Do not use in prod yet 
+packetforwarder crashes during **downlinks** - beacons etc
 
 ## Details
 Currently only tested on the `G285`
