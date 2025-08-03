@@ -4,7 +4,7 @@ A minimal docker-compose config for running a helium lora gateway on a bobcat 30
 Currently only tested on the `G285`
 
 Uses the following docker images:
-- `rakwireless/udp-packet-forwarder:latest` - Stable packet forwarder. I had issues with other images
+- `rakwireless/udp-packet-forwarder:latest` - Stable packet forwarder. I had issues with other images including the one provided by sicXnull. The CPU usage of this one is also half as much - good for solar deployments.
 - `quay.io/team-helium/miner:gateway-latest` - Official gateway image
 
 ### Credits:
