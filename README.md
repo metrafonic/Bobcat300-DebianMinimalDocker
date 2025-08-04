@@ -1,16 +1,12 @@
 # Bobcat300-DebianMinimalDocker
 A minimal docker-compose config for running a helium lora gateway on a bobcat 300.
 
-## Warning
-Currently having issues with the pf crashing.  
-Do not use in prod yet!  
-Packetforwarder crashes during **downlinks** - beacons etc
 
 ## Details
 Currently only tested on the `G285`
 
 Uses the following docker images:
-- `rakwireless/udp-packet-forwarder:latest` - Stable packet forwarder. I had issues with other images including the one provided by sicXnull. The CPU usage of this one is also half as much - good for solar deployments.
+- `heliumdiy/sx1302_hal` - Fast and common pf used by most diy miners.
 - `quay.io/team-helium/miner:gateway-latest` - Official gateway image
 
 ### Credits:
@@ -33,18 +29,21 @@ reboot
 
 ## Install
 ```
-mkdir gw && cd gw
-curl -fsSL https://raw.githubusercontent.com/metrafonic/Bobcat300-DebianMinimalDocker/refs/heads/main/docker-compose.yml-o docker-compose.yml
+git clone https://github.com/metrafonic/Bobcat300-DebianMinimalDocker && cd Bobcat300-DebianMinimalDocker
 ```
-Modify the compose file to match your region. Current config uses `GW_REGION=EU868` and `BAND=eu_863_870`. Make sure to edit them both if this does not match.
+Modify the `REGION` value in the `docker-compose.yml`. The `REGION` can be one of the following values `US915 | EU868 | EU433 | CN470 | CN779 | AU915 | AS923 | KR920 | IN865`
 
-The `BAND` can be one of these values: `as_915_921(as_923_3)`, `as_915_928(as_915_1)`, `as_917_920(as_923_4)`, `as_920_923(as_923_2)`, `au_915_928`, `cn_470_510`, `eu_433`, `eu_863_870`, `in_865_867`, `kr_920_923`, `ru_864_870`, and `us_902_928`.
-
-The `REGION` can be one of the following values `US915 | EU868 | EU433 | CN470 | CN779 | AU915 | AS923 | KR920 | IN865`
-
-Start the services
+Start the pf once, so that it creates the region file. We must modify it.
 ```
-docker-compose up -d
+docker-compose up pktfwd -d && sleep 1 && docker compose down
+```
+Edit `packet_forwarder/configs/global_conf.json` and replace and replace the `spidev_path:` value with:
+```
+"spidev_path": "/dev/spidev1.0",
+```
+Start again:
+```
+docker-compose up -d 
 ```
 Check the logs
 ```
