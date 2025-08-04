@@ -8,6 +8,7 @@
 DEFAULT_RESET_PIN=149
 RESET_GPIO=${2:-$DEFAULT_RESET_PIN}
 POWER_GPIO=125
+EXTRA_GPIO=122
 
 WAIT_GPIO() {
     sleep 0.1
@@ -27,28 +28,39 @@ iot_sk_term() {
     fi
 }
 
-setup_power_gpio() {
-    if [ ! -d /sys/class/gpio/gpio$POWER_GPIO ]; then
-        echo "$POWER_GPIO" > /sys/class/gpio/export
+setup_gpio() {
+    GPIO_NUM=$1
+    if [ ! -d /sys/class/gpio/gpio$GPIO_NUM ]; then
+        echo "$GPIO_NUM" > /sys/class/gpio/export
     fi
-    echo "out" > /sys/class/gpio/gpio$POWER_GPIO/direction
+    echo "out" > /sys/class/gpio/gpio$GPIO_NUM/direction
+}
+
+set_gpio_value() {
+    GPIO_NUM=$1
+    VALUE=$2
+    echo "$VALUE" > /sys/class/gpio/gpio$GPIO_NUM/value
 }
 
 case "$1" in
     start)
-        sleep 5
-        setup_power_gpio
-        echo "0" > /sys/class/gpio/gpio$POWER_GPIO/value
+        setup_gpio $POWER_GPIO
+        setup_gpio $EXTRA_GPIO
+        set_gpio_value $POWER_GPIO 0
+        set_gpio_value $EXTRA_GPIO 0
         sleep 1
-        echo "1" > /sys/class/gpio/gpio$POWER_GPIO/value
+        set_gpio_value $POWER_GPIO 1
+        set_gpio_value $EXTRA_GPIO 1
         iot_sk_term
         sleep 0.2
         iot_sk_init
         ;;
     stop)
         iot_sk_term
-        setup_power_gpio
-        echo "0" > /sys/class/gpio/gpio$POWER_GPIO/value
+        setup_gpio $POWER_GPIO
+        setup_gpio $EXTRA_GPIO
+        set_gpio_value $POWER_GPIO 0
+        set_gpio_value $EXTRA_GPIO 0
         ;;
     *)
         echo "Usage: $0 {start|stop} [<gpio number>]"
