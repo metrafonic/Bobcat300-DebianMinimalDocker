@@ -31,7 +31,8 @@ reboot
 ```
 git clone https://github.com/metrafonic/Bobcat300-DebianMinimalDocker && cd Bobcat300-DebianMinimalDocker
 ```
-Modify the `REGION` value in the `docker-compose.yml`. The `REGION` can be one of the following values `US915 | EU868 | EU433 | CN470 | CN779 | AU915 | AS923 | KR920 | IN865`
+Modify the `REGION` value in the `docker-compose.yml`. The `REGION` can be one of the following values:  
+`US915 | EU868 | EU433 | CN470 | CN779 | AU915 | AS923 | KR920 | IN865`
 
 Start the pf once, so that it creates the region file. We must modify it.
 ```
@@ -51,5 +52,5 @@ docker compose logs -f --tail=1000
 ```
 Check miner animal name:
 ```
-docker exec gw_helium-miner_1 helium_gateway key info
+docker-compose exec helium-miner helium_gateway key info
 ```
