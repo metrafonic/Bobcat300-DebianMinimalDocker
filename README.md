@@ -10,6 +10,7 @@ Uses the following docker images:
 - `quay.io/team-helium/miner:gateway-latest` - Official gateway image
 
 ### Credits:
+- r00t1ng - suppling the missing ldo reset script
 - [sicXnull](https://github.com/sicXnull) has done some amazing work on reverse engineering the bobcat 300. Check out their repos:
   - https://github.com/sicXnull/Bobcat300-Debian
   - https://github.com/sicXnull/BobcatDashboard
