@@ -35,7 +35,7 @@ echo 125 > /sys/class/gpio/export
 echo out > /sys/class/gpio/gpio125/direction
 echo 1 > /sys/class/gpio/gpio125/value
 ```
-
+Clone the project
 ```
 git clone https://github.com/metrafonic/Bobcat300-DebianMinimalDocker && cd Bobcat300-DebianMinimalDocker
 ```
