@@ -29,6 +29,13 @@ reboot
 6. Consider adding ssh-keys and disabling password based auth by adding `PasswordAuthentication no` to `/etc/ssh/ssh_config` 
 
 ## Install
+Ensure the concentrator gets power by adding this to the bottom of `/etc/rc.local` before the `exit 0;`
+```
+echo 125 > /sys/class/gpio/export
+echo out > /sys/class/gpio/gpio125/direction
+echo 1 > /sys/class/gpio/gpio125/value
+```
+
 ```
 git clone https://github.com/metrafonic/Bobcat300-DebianMinimalDocker && cd Bobcat300-DebianMinimalDocker
 ```
