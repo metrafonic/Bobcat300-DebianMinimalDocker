@@ -1,21 +1,20 @@
 version: '3'
 services:
-  udp-packet-forwarder:
-    image: rakwireless/udp-packet-forwarder:latest
-    restart: unless-stopped
+  pktfwd:
+    image: ghcr.io/heliumdiy/sx1302_hal:sha-87d8931
+    entrypoint: ["/opt/packet_forwarder/entrypoint.sh"]
+    working_dir: /opt/packet_forwarder
+    environment:
+      VENDOR: bobcat
+      REGION: EU868
     privileged: true
-    network_mode: host
     depends_on:
       - helium-miner
-    environment:
-      MODEL: 'AUTO'
-      BAND: 'eu_863_870'
-      DEVICE: '/dev/spidev1.0'
-      USE_LIBGPIOD: 0
-      RESET_GPIO: 149
-      POWER_EN_GPIO: 125
-      SERVER_HOST: '127.0.0.1'
-      SERVER_PORT: 1680
+    volumes:
+      - ./packet_forwarder/configs:/opt/packet_forwarder/configs
+      - ./packet_forwarder/tools:/opt/packet_forwarder/tools
+    network_mode: host
+    restart: always
 
   helium-miner:
     image: quay.io/team-helium/miner:gateway-latest
@@ -29,5 +28,8 @@ services:
     privileged: true
     devices:
       - /dev/i2c-2:/dev/i2c-2
+    security_opt:
+      - label=disable
     network_mode: host
     restart: unless-stopped
+
