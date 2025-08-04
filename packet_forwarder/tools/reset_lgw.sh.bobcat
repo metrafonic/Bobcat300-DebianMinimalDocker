@@ -36,6 +36,7 @@ setup_power_gpio() {
 
 case "$1" in
     start)
+        sleep 5
         setup_power_gpio
         echo "0" > /sys/class/gpio/gpio$POWER_GPIO/value
         sleep 1
